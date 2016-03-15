@@ -1,4 +1,4 @@
-package Data;
+package Game;
 
 import org.lwjgl.opengl.Display;
 

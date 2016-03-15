@@ -6,7 +6,7 @@ import static Helpers.Artist.quickLoad;
 import org.newdawn.slick.opengl.Texture;
 
 import Helpers.Artist;
-import Data.Enemy;
+import Game.Enemy;
 
 public class TestEnemy extends Enemy {
 	Texture tex; 

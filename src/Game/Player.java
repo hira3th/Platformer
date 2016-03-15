@@ -1,4 +1,4 @@
-package Data;
+package Game;
 
 import static Helpers.Artist.TILE_SIZE;
 import static Helpers.Artist.drawQuadTex;

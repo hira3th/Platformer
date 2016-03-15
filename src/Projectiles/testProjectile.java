@@ -1,6 +1,6 @@
 package Projectiles;
 
-import Data.Projectile;
+import Game.Projectile;
 import static Helpers.Artist.*;
 
 import org.newdawn.slick.opengl.Texture;

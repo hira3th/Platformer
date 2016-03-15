@@ -1,4 +1,4 @@
-package Data;
+package Game;
 
 public abstract class Enemy extends Entity {
 	public Enemy(int id, float x, float y){

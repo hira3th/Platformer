@@ -1,4 +1,4 @@
-package Data;
+package Game;
 
 import org.newdawn.slick.geom.Rectangle;
 import Helpers.Artist;
