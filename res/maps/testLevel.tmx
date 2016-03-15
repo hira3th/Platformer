@@ -14,9 +14,14 @@
    H4sIAAAAAAAAC2NgGAWjYBSMglEwCvADloF2wCgYBUMMAADaD4Z2YAkAAA==
   </data>
  </layer>
- <layer name="enemies" width="30" height="20">
+ <layer name="enemies" width="30" height="20" visible="0">
   <data encoding="base64" compression="gzip">
    H4sIAAAAAAAAC2NgGAWjYBSMglGADlgHiZ20dgc9/DkQYTkKRsFAAwDmKZagYAkAAA==
+  </data>
+ </layer>
+ <layer name="enemies3x2" width="30" height="20">
+  <data encoding="base64" compression="gzip">
+   H4sIAAAAAAAAC2NgGAWjYBSMAvoD1oF2wCgYBaNgFNAQAAC3sb88YAkAAA==
   </data>
  </layer>
  <layer name="background" width="30" height="20" visible="0">

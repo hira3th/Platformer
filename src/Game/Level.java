@@ -7,13 +7,15 @@ import org.newdawn.slick.geom.Rectangle;
 import org.newdawn.slick.geom.Shape;
 import org.newdawn.slick.tiled.TiledMap;
 
+import Enemies.BigTestEnemy;
 import Enemies.TestEnemy;
 import Helpers.Artist;
 
 public abstract class Level {
 	public static TiledMap map;
 
-	private static int x = 0, y = 0, solidLayer, enemyLayer;
+	private static int x = 0, y = 0, //
+			solidLayer, enemyLayer, enemy3x2Layer;
 	private static float playerSpawnX, playerSpawnY;
 	private static boolean blocked[][];
 	private static ArrayList<Rectangle> blocks;
@@ -25,6 +27,7 @@ public abstract class Level {
 			map = new TiledMap("res/maps/" + mapName + ".tmx");
 			solidLayer = map.getLayerIndex("solid");
 			enemyLayer = map.getLayerIndex("enemies");
+			enemy3x2Layer = map.getLayerIndex("enemies3x2");
 
 			blocked = new boolean[map.getWidth()][map.getHeight()];
 			enemies = new ArrayList<Enemy>();
@@ -49,7 +52,16 @@ public abstract class Level {
 				for (int j = 0; j < blocked[i].length; j++) {
 					if (map.getTileId(i, j, enemyLayer) != 0) {
 						enemies.add(new TestEnemy(1, i * Artist.TILE_SIZE + Artist.TILE_SIZE / 4,
-								j * Artist.TILE_SIZE + Artist.TILE_SIZE / 4));
+								j * Artist.TILE_SIZE + Artist.TILE_SIZE / 4, 1, 1));
+					}
+				}
+			}
+
+			for (int i = 0; i < blocked.length; i++) {
+				for (int j = 0; j < blocked[i].length; j++) {
+					if (map.getTileId(i, j, enemy3x2Layer) != 0) {
+						enemies.add(new BigTestEnemy(1, i * Artist.TILE_SIZE + 64 / 4,
+								j * Artist.TILE_SIZE + 96 / 4, 2, 3)); // Div by 4 wtf?
 					}
 				}
 			}
@@ -81,6 +93,42 @@ public abstract class Level {
 		return blocked[x][y];
 	}
 
+	public static boolean hasCollision(int[] x, int[] y, int direction) {
+		/*
+		 * Hier kann noch noch viel optimiert werden!
+		 * 
+		 * 0 for North, 1 for East, 2 for South, 3 for West
+		 */
+		boolean collision = false;
+
+		for (int i = 0; i < x.length; i++) {
+			for (int j = 0; j < y.length; j++) {
+				if (direction == 0) {
+					if (blocked[x[i]][y[j] - 1]) {
+						collision = true;
+						break;
+					}
+				} else if (direction == 1) {
+					if (blocked[x[i] + 1][y[j]]) {
+						collision = true;
+						break;
+					}
+				} else if (direction == 2) {
+					if (blocked[x[i]][y[j] + 1]) {
+						collision = true;
+						break;
+					}
+				} else if (direction == 3) {
+					if (blocked[x[i] - 1][y[j]]) {
+						collision = true;
+						break;
+					}
+				}
+			}
+		}
+		return collision;
+	}
+
 	public static boolean hasCollision(Projectile obj) {
 		boolean collision = false;
 		for (Rectangle block : blocks) {
@@ -105,8 +153,8 @@ public abstract class Level {
 						projectile.kill();
 					}
 				}
-				if(!enemy.isAlive())
-					enemies.remove(enemy);   
+				if (!enemy.isAlive())
+					enemies.remove(enemy);
 			}
 	}
 

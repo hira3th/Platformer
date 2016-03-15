@@ -32,8 +32,8 @@ public abstract class Projectile {
 	}
 
 	public void update() {
-		System.out.println("HITBOX: " + this.hitboxCenterX + ", " + this.hitboxCenterY + " || POS: " + this.xx + ", "
-				+ this.yy + "||" + offsetToPlayerX + ", " + offsetToPlayerY);
+//		System.out.println("HITBOX: " + this.hitboxCenterX + ", " + this.hitboxCenterY + " || POS: " + this.xx + ", "
+//				+ this.yy + "||" + offsetToPlayerX + ", " + offsetToPlayerY);
 
 		if (direction == 0)
 			xx += speed;

@@ -10,12 +10,13 @@ import Game.Enemy;
 
 public class TestEnemy extends Enemy {
 	Texture tex; 
-	public TestEnemy(int id, float x, float y) {
-		super(id, x, y);
+	public TestEnemy(int id, float x, float y, int xTileCount,int yTileCount) {
+		super(id, x, y, xTileCount, yTileCount);
 		tex = quickLoad("basic/enemy1");
 		this.spriteHeight = 32;
 		this.spriteWidth = 32;
 		this.health = 10;
+		this.speed = 0.01f;
 	}
 
 	@Override

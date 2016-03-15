@@ -4,35 +4,46 @@ import org.newdawn.slick.geom.Rectangle;
 import Helpers.Artist;
 
 public abstract class Entity {
-	protected int cx, cy; // GridPosition
+	protected int[] cx, cy; // GridPosition
 	protected float xr, yr; // Position inside a cell
 	protected float xx, yy; // Resulting coordinates
 	protected float frictX = 0.7f, //
 			frictY = 0.94f, //
 			gravity = 0.02f, //
-			speed = 0.01f, //
+			speed = 0.0f, //
 			dx = 0, //
 			dy = 0;
 
 	private boolean alive = true;
-	protected int spriteHeight, spriteWidth, id;
+	protected int spriteHeight, spriteWidth, //
+			id, //
+			xTileCount, yTileCount;
 	protected double health;
 	protected float hitboxCenterX, hitboxCenterY, offsetToPlayerX, offsetToPlayerY;
 	protected Rectangle hitbox;
 
-	public Entity(int id, float x, float y) {
+	public Entity(int id, float x, float y, int xTileCount, int yTileCount) {
 		this.id = id;
+		this.xTileCount = xTileCount;
+		this.yTileCount = yTileCount;
+		this.cx = new int[xTileCount];
+		this.cy = new int[yTileCount];
 		setCoordinates(x, y);
 	}
 
 	public void setCoordinates(float x, float y) {
 		xx = x;
 		yy = y;
-		cx = (int) (xx / Artist.TILE_SIZE);
-		cy = (int) (yy / Artist.TILE_SIZE);
-		xr = (xx - cx * Artist.TILE_SIZE) / 16;
-		yr = (yy - cy * Artist.TILE_SIZE) / 16;
 
+		for (int i = 0; i < cx.length; i++) {
+			cx[i] = (int) (xx / Artist.TILE_SIZE) + i;
+		}
+
+		for (int i = 0; i < cy.length; i++) {
+			cy[i] = (int) (yy / Artist.TILE_SIZE) + i;
+		}
+		xr = (xx - cx[0] * Artist.TILE_SIZE) / 16;
+		yr = (yy - cy[0] * Artist.TILE_SIZE) / 16;
 	}
 
 	public void update() {
@@ -40,26 +51,32 @@ public abstract class Entity {
 		 * X-Axis Logic goes here
 		 */
 
+		
+		dx += speed;
 		xr += dx;
 		dx *= frictX;
 
-		if (Level.hasCollision(cx - 1, cy) && xr <= 0.5f) {
+		if (Level.hasCollision(cx, cy, 3) && xr <= 0.5f) {
 			dx = 0;
 			xr = 0.5f;
 		}
 
-		if (Level.hasCollision(cx + 1, cy) && xr >= 0.5f) {
+		if (Level.hasCollision(cx, cy, 1) && xr >= 0.5f) {
 			dx = 0;
 			xr = 0.5f;
 		}
 
 		while (xr < 0) {
-			cx--;
+			for (int i = 0; i < cx.length; i++) {
+				cx[i]--;
+			}
 			xr++;
 		}
 
 		while (xr > 1) {
-			cx++;
+			for (int i = 0; i < cx.length; i++) {
+				cx[i]++;
+			}
 			xr--;
 		}
 
@@ -71,7 +88,7 @@ public abstract class Entity {
 		yr += dy;
 		dy *= frictY;
 
-		if (Level.hasCollision(cx, cy - 1) && yr <= 0.4f) {
+		if (Level.hasCollision(cx, cy, 0) && yr <= 0.4f) {
 			dy = 0;
 			yr = 0.4f;
 		}
@@ -82,19 +99,23 @@ public abstract class Entity {
 		}
 
 		while (yr > 1) {
-			cy++;
+			for (int i = 0; i < cy.length; i++) {
+				cy[i]++;
+			}
 			yr--;
 		}
 
 		while (yr < 0) {
-			cy--;
+			for (int i = 0; i < cy.length; i++) {
+				cy[i]--;
+			}
 			yr++;
 		}
 
-		xx = (cx + xr) * Artist.TILE_SIZE - Artist.TILE_SIZE / 2;
-		yy = (cy + yr) * Artist.TILE_SIZE - Artist.TILE_SIZE / 2;
+		xx = (cx[0] + xr) * Artist.TILE_SIZE - Artist.TILE_SIZE / 2;
+		yy = (cy[0] + yr) * Artist.TILE_SIZE - Artist.TILE_SIZE / 2;
 
-		this.hitbox = new Rectangle(this.xx, this.yy, spriteHeight, spriteWidth);
+		this.hitbox = new Rectangle(this.xx, this.yy, spriteWidth, spriteHeight);
 		this.hitboxCenterX = hitbox.getCenterX();
 		this.hitboxCenterY = hitbox.getCenterY();
 		this.offsetToPlayerX = hitboxCenterX - Player.getHitboxCenterX();
@@ -102,7 +123,7 @@ public abstract class Entity {
 	}
 
 	public boolean onGround() {
-		return Level.hasCollision(cx, cy + 1) && yr >= 0.5f;
+		return Level.hasCollision(cx, cy, 2) && yr >= 0.5f;
 	}
 
 	public boolean isOnScreen() {
