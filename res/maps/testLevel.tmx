@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<map version="1.0" orientation="orthogonal" renderorder="right-down" width="30" height="20" tilewidth="32" tileheight="32" nextobjectid="1">
+ <tileset firstgid="1" name="spritesheetEnv" tilewidth="32" tileheight="32" tilecount="3" columns="3">
+  <image source="../spritesheetEnvironment/spritesheet.png" width="96" height="32"/>
+ </tileset>
+ <tileset firstgid="4" name="player" tilewidth="32" tileheight="32" tilecount="1" columns="1">
+  <image source="../basic/player.png" width="32" height="32"/>
+ </tileset>
+ <tileset firstgid="5" name="enemy1" tilewidth="32" tileheight="32" tilecount="1" columns="1">
+  <image source="../basic/enemy1.png" width="32" height="32"/>
+ </tileset>
+ <layer name="playerSpawn" width="30" height="20" visible="0">
+  <data encoding="base64" compression="gzip">
+   H4sIAAAAAAAAC2NgGAWjYBSMglEwCvADloF2wCgYBUMMAADaD4Z2YAkAAA==
+  </data>
+ </layer>
+ <layer name="enemies" width="30" height="20">
+  <data encoding="base64" compression="gzip">
+   H4sIAAAAAAAAC2NgGAWjYBSMglGADlgHiZ20dgc9/DkQYTkKRsFAAwDmKZagYAkAAA==
+  </data>
+ </layer>
+ <layer name="background" width="30" height="20" visible="0">
+  <data encoding="base64" compression="gzip">
+   H4sIAAAAAAAAC+3DQQ0AAAwDoat/0zOxJySsmqqqbw/Ki6QtYAkAAA==
+  </data>
+ </layer>
+ <layer name="solid" width="30" height="20">
+  <data encoding="base64" compression="gzip">
+   H4sIAAAAAAAAC2NgGAWjYBQMVsBEAA+UvbS0m5B7hru9AxHOgzGNEatuFI/iwYoBE4RNUWAJAAA=
+  </data>
+ </layer>
+</map>
