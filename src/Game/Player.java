@@ -25,7 +25,7 @@ public abstract class Player {
 	private static int direction = 0;
 	private static Rectangle hitbox;
 	private static Texture tex;
-	
+
 	public static void initiate() {
 		setCoordinates(Level.getPlayerSpawnX(), Level.getPlayerSpawnY());
 		tex = quickLoad("basic/player");
@@ -46,7 +46,7 @@ public abstract class Player {
 		if ((Keyboard.isKeyDown(Keyboard.KEY_UP) || Keyboard.isKeyDown(Keyboard.KEY_W)) && onGround()) {
 			dy = -0.4f;
 		}
-		
+
 		if (counter > 0)
 			counter--;
 		if (Keyboard.isKeyDown(Keyboard.KEY_SPACE)) {
@@ -125,8 +125,7 @@ public abstract class Player {
 	}
 
 	public static void draw() {
-		drawQuadTex(tex, Artist.getMidScreenWidth(), Artist.getMidScreenHeight(), TILE_SIZE,
-				TILE_SIZE);
+		drawQuadTex(tex, Artist.getMidScreenWidth(), Artist.getMidScreenHeight(), TILE_SIZE, TILE_SIZE);
 	}
 
 	public static int getGridPositionX() {

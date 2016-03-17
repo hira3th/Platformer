@@ -22,16 +22,11 @@ public class BigTestEnemy extends Enemy{
 				System.out.println(cx[i] + ", " + cy[j]);
 			}
 		}
-		
-		System.out.println("HITBOX: " + this.hitboxCenterX + ", " + this.hitboxCenterY + " || POS: " + this.xx + ", "
-				+ this.yy + "||" + offsetToPlayerX + ", " + offsetToPlayerY + "||" + this.xr + ", " + this.yr);
 	}
 
 	@Override
 	public void draw() {
 		drawQuadTex(tex, Artist.getMidScreenWidth() + offsetToPlayerX-(Artist.TILE_SIZE/2) * (xTileCount-1),
 				Artist.getMidScreenHeight() + offsetToPlayerY-(Artist.TILE_SIZE/2) * (yTileCount-1), spriteWidth, spriteHeight);
-		System.out.println("HITBOX: " + this.hitboxCenterX + ", " + this.hitboxCenterY + " || POS: " + this.xx + ", "
-				+ this.yy + "||" + offsetToPlayerX + ", " + offsetToPlayerY + "||" + this.xr + ", " + this.yr);
 	}
 }
