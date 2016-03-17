@@ -42,8 +42,9 @@ public abstract class Entity {
 		for (int i = 0; i < cy.length; i++) {
 			cy[i] = (int) (yy / Artist.TILE_SIZE) + i;
 		}
-		xr = (xx - cx[0] * Artist.TILE_SIZE) / 16;
-		yr = (yy - cy[0] * Artist.TILE_SIZE) / 16;
+		
+		xr = (xx - cx[0] * Artist.TILE_SIZE) / 16 + 0.5f;
+		yr = (yy - cy[0] * Artist.TILE_SIZE) / 16 + 0.5f;
 	}
 
 	public void update() {
@@ -51,7 +52,6 @@ public abstract class Entity {
 		 * X-Axis Logic goes here
 		 */
 
-		
 		dx += speed;
 		xr += dx;
 		dx *= frictX;
@@ -115,7 +115,7 @@ public abstract class Entity {
 		xx = (cx[0] + xr) * Artist.TILE_SIZE - Artist.TILE_SIZE / 2;
 		yy = (cy[0] + yr) * Artist.TILE_SIZE - Artist.TILE_SIZE / 2;
 
-		this.hitbox = new Rectangle(this.xx, this.yy, spriteWidth, spriteHeight);
+		this.hitbox = new Rectangle(this.xx, this.yy, Artist.TILE_SIZE * xTileCount, Artist.TILE_SIZE * yTileCount);
 		this.hitboxCenterX = hitbox.getCenterX();
 		this.hitboxCenterY = hitbox.getCenterY();
 		this.offsetToPlayerX = hitboxCenterX - Player.getHitboxCenterX();

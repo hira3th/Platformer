@@ -21,7 +21,7 @@ public class TestEnemy extends Enemy {
 
 	@Override
 	public void draw() {
-		drawQuadTex(tex, Artist.getMidScreenWidth() + offsetToPlayerX,
-				Artist.getMidScreenHeight() + offsetToPlayerY, spriteWidth, spriteHeight);
+		drawQuadTex(tex,Artist.getMidScreenWidth() + offsetToPlayerX-(Artist.TILE_SIZE/2) * (xTileCount-1),
+				Artist.getMidScreenHeight() + offsetToPlayerY-(Artist.TILE_SIZE/2) * (yTileCount-1), spriteWidth, spriteHeight);
 	}
 }
