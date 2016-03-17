@@ -15,7 +15,7 @@ public abstract class Level {
 	public static TiledMap map;
 
 	private static int x = 0, y = 0, //
-			solidLayer, enemyLayer, enemy3x2Layer;
+			solidLayer, enemyLayer, enemy2x4Layer;
 	private static float playerSpawnX, playerSpawnY;
 	private static boolean blocked[][];
 	private static ArrayList<Rectangle> blocks;
@@ -27,7 +27,7 @@ public abstract class Level {
 			map = new TiledMap("res/maps/" + mapName + ".tmx");
 			solidLayer = map.getLayerIndex("solid");
 			enemyLayer = map.getLayerIndex("enemies");
-			enemy3x2Layer = map.getLayerIndex("enemies3x2");
+			enemy2x4Layer = map.getLayerIndex("enemies2x4");
 
 			blocked = new boolean[map.getWidth()][map.getHeight()];
 			enemies = new ArrayList<Enemy>();
@@ -59,9 +59,9 @@ public abstract class Level {
 
 			for (int i = 0; i < blocked.length; i++) {
 				for (int j = 0; j < blocked[i].length; j++) {
-					if (map.getTileId(i, j, enemy3x2Layer) != 0) {
-						enemies.add(new BigTestEnemy(1, i * Artist.TILE_SIZE + 64 / 4,
-								j * Artist.TILE_SIZE + 96 / 4, 2, 3)); // Div by 4 wtf?
+					if (map.getTileId(i, j, enemy2x4Layer) != 0) {
+						enemies.add(new BigTestEnemy(1, i * Artist.TILE_SIZE,
+								j * Artist.TILE_SIZE, 2, 4)); // Div by 4 wtf?
 					}
 				}
 			}
