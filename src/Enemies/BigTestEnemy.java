@@ -16,12 +16,9 @@ public class BigTestEnemy extends Enemy{
 		this.spriteHeight = 128;
 		this.spriteWidth = 64;
 		this.health = 100;
-		this.speed = 0.01f;
-		for(int i = 0; i < cx.length; i++){
-			for (int j = 0; j < cy.length; j++){
-				System.out.println(cx[i] + ", " + cy[j]);
-			}
-		}
+		this.xr = 0.5f;
+		this.yr = 0.5f;
+//		this.speed = 0.01f;
 	}
 
 	@Override

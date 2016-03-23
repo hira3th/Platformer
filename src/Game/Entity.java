@@ -42,9 +42,9 @@ public abstract class Entity {
 		for (int i = 0; i < cy.length; i++) {
 			cy[i] = (int) (yy / Artist.TILE_SIZE) + i;
 		}
-		
-		xr = (xx - cx[0] * Artist.TILE_SIZE) / 16 + 0.5f;
-		yr = (yy - cy[0] * Artist.TILE_SIZE) / 16 + 0.5f;
+
+		xr = (xx - cx[0] * Artist.TILE_SIZE) / 16;
+		yr = (yy - cy[0] * Artist.TILE_SIZE) / 16;
 	}
 
 	public void update() {
@@ -125,14 +125,18 @@ public abstract class Entity {
 	public boolean onGround() {
 		return Level.hasCollision(cx, cy, 2) && yr >= 0.5f;
 	}
-
+	
+	boolean first = true;
 	public boolean isOnScreen() {
 		float distanceX = offsetToPlayerX < 0 ? -offsetToPlayerX : offsetToPlayerX;
 		float distanceY = offsetToPlayerY < 0 ? -offsetToPlayerY : offsetToPlayerY;
 
-		boolean onScreenX = distanceX + spriteWidth / 2 <= Artist.getMidScreenWidth();
-		boolean onScreenY = distanceY + spriteHeight / 2 <= Artist.getMidScreenHeight();
-
+		boolean onScreenX = (distanceX - spriteWidth) <= Artist.getMidScreenWidth();
+		boolean onScreenY = (distanceY - spriteHeight) <= Artist.getMidScreenHeight();
+		if(first){
+			System.out.println(distanceX + spriteWidth / 2 + ", " + distanceY + spriteHeight / 2);
+			first = !first;
+		}
 		return (onScreenX && onScreenY);
 	}
 
