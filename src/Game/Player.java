@@ -23,40 +23,64 @@ public abstract class Player {
 			dx = 0, //
 			dy = 0;
 	private static int direction = 0;
-	private static Rectangle hitbox;
+	protected static Rectangle hitbox;
 	private static Texture tex;
+	private static boolean hit = false;
 
 	public static void initiate() {
 		setCoordinates(Level.getPlayerSpawnX(), Level.getPlayerSpawnY());
+		hitbox = new Rectangle(xx, yy, TILE_SIZE, TILE_SIZE);
+		hitboxCenterX = hitbox.getCenterX();
+		hitboxCenterY = hitbox.getCenterY();
 		tex = quickLoad("basic/player");
 	}
 
 	static int counter = 0;
 
 	public static void update() {
-		if (Keyboard.isKeyDown(Keyboard.KEY_LEFT) || Keyboard.isKeyDown(Keyboard.KEY_A)) {
-			dx -= speed;
-			direction = 1;
-		}
-		if (Keyboard.isKeyDown(Keyboard.KEY_RIGHT) || Keyboard.isKeyDown(Keyboard.KEY_D)) {
-			dx += speed;
-			direction = 0;
-		}
-
-		if ((Keyboard.isKeyDown(Keyboard.KEY_UP) || Keyboard.isKeyDown(Keyboard.KEY_W)) && onGround()) {
-			dy = -0.4f;
+		if (Level.playerHasEntityCollision() && !hit) {
+			hit = true;
+			frictX = 0.9f;
+			if (dx != 0)
+				dx += dx < 0 ? 0.5f : -0.5f;
+			if (dy != 0)
+				dy += -0.4f;
 		}
 
-		if (counter > 0)
-			counter--;
-		if (Keyboard.isKeyDown(Keyboard.KEY_SPACE)) {
-			if (counter == 0)
-				if (!Level.hasMaxProjectiles()) {
-					Level.addProjectile(new testProjectile(direction, xx, yy));
-					counter = 5;
-				}
+		if (hit) {
+			if (dx < 0.001f && dy <= 0.02f) {
+				hit = false;
+				frictX = 0.9f;
+			}
 		}
+		
+		System.out.println(hit);
+		
+		if (!hit) {
+			if (Keyboard.isKeyDown(Keyboard.KEY_LEFT) || Keyboard.isKeyDown(Keyboard.KEY_A)) {
+				dx -= speed;
+				direction = 1;
+			}
 
+			if (Keyboard.isKeyDown(Keyboard.KEY_RIGHT) || Keyboard.isKeyDown(Keyboard.KEY_D)) {
+				dx += speed;
+				direction = 0;
+			}
+
+			if ((Keyboard.isKeyDown(Keyboard.KEY_UP) || Keyboard.isKeyDown(Keyboard.KEY_W)) && onGround()) {
+				dy = -0.4f;
+			}
+
+			if (counter > 0)
+				counter--;
+			if (Keyboard.isKeyDown(Keyboard.KEY_SPACE)) {
+				if (counter == 0)
+					if (!Level.hasMaxProjectiles()) {
+						Level.addProjectile(new testProjectile(direction, xx, yy));
+						counter = 5;
+					}
+			}
+		}
 		xr += dx;
 		dx *= frictX;
 
@@ -162,6 +186,22 @@ public abstract class Player {
 
 	public static float getHitboxCenterX() {
 		return hitboxCenterX;
+	}
+
+	public static float getDX() {
+		return dx;
+	}
+
+	public static void setDX(float newDX) {
+		dx = newDX;
+	}
+
+	public static float getDY() {
+		return dy;
+	}
+
+	public static void setDY(float newDY) {
+		dy = newDY;
 	}
 
 	public static float getHitboxCenterY() {

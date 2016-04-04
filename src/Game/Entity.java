@@ -29,6 +29,9 @@ public abstract class Entity {
 		this.cx = new int[xTileCount];
 		this.cy = new int[yTileCount];
 		setCoordinates(x, y);
+		this.hitbox = new Rectangle(this.xx, this.yy, Artist.TILE_SIZE * xTileCount, Artist.TILE_SIZE * yTileCount);
+		this.hitboxCenterX = hitbox.getCenterX();
+		this.hitboxCenterY = hitbox.getCenterY();
 	}
 
 	public void setCoordinates(float x, float y) {
@@ -43,8 +46,8 @@ public abstract class Entity {
 			cy[i] = (int) (yy / Artist.TILE_SIZE) + i;
 		}
 
-		xr = (xx - cx[0] * Artist.TILE_SIZE) / 16;
-		yr = (yy - cy[0] * Artist.TILE_SIZE) / 16;
+		xr = (xx - cx[0] * Artist.TILE_SIZE) / 16 + 0.5f;
+		yr = (yy - cy[0] * Artist.TILE_SIZE) / 16 + 0.5f;
 	}
 
 	public void update() {
@@ -125,19 +128,39 @@ public abstract class Entity {
 	public boolean onGround() {
 		return Level.hasCollision(cx, cy, 2) && yr >= 0.5f;
 	}
-	
+
 	boolean first = true;
+
 	public boolean isOnScreen() {
 		float distanceX = offsetToPlayerX < 0 ? -offsetToPlayerX : offsetToPlayerX;
 		float distanceY = offsetToPlayerY < 0 ? -offsetToPlayerY : offsetToPlayerY;
 
 		boolean onScreenX = (distanceX - spriteWidth) <= Artist.getMidScreenWidth();
 		boolean onScreenY = (distanceY - spriteHeight) <= Artist.getMidScreenHeight();
-		if(first){
+		if (first) {
 			System.out.println(distanceX + spriteWidth / 2 + ", " + distanceY + spriteHeight / 2);
 			first = !first;
 		}
 		return (onScreenX && onScreenY);
+	}
+
+	public boolean isCloseToPlayer() {
+		boolean isCloseX = false;
+		boolean isCloseY = false;
+
+		for (int cx : cx) {
+			int distance = Player.cx - cx > 0 ? Player.cx - cx : -(Player.cx - cx);
+			if (distance < 2)
+				return isCloseX = true;
+		}
+		
+		for (int cy : cy) {
+			int distance = Player.cy - cy > 0 ? Player.cy - cy : -(Player.cy - cy);
+			if (distance < 2)
+				return isCloseY = true;
+		}
+		
+		return isCloseX && isCloseY;
 	}
 
 	public void draw() {

@@ -59,8 +59,8 @@ public abstract class Projectile {
 		float distanceX = offsetToPlayerX < 0 ? -offsetToPlayerX : offsetToPlayerX;
 		float distanceY = offsetToPlayerY < 0 ? -offsetToPlayerY : offsetToPlayerY;
 
-		boolean onScreenX = distanceX + spriteWidth / 2 <= Artist.getMidScreenWidth();
-		boolean onScreenY = distanceY + spriteHeight / 2 <= Artist.getMidScreenHeight();
+		boolean onScreenX = distanceX - spriteWidth <= Artist.getMidScreenWidth();
+		boolean onScreenY = distanceY - spriteHeight <= Artist.getMidScreenHeight();
 
 		return (onScreenX && onScreenY);
 	}

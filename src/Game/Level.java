@@ -51,8 +51,8 @@ public abstract class Level {
 														// haesslich
 				for (int j = 0; j < blocked[i].length; j++) {
 					if (map.getTileId(i, j, enemyLayer) != 0) {
-						enemies.add(new TestEnemy(1, i * Artist.TILE_SIZE + Artist.TILE_SIZE / 4,
-								j * Artist.TILE_SIZE + Artist.TILE_SIZE / 4, 1, 1));
+						enemies.add(new TestEnemy(1, i * Artist.TILE_SIZE,
+								j * Artist.TILE_SIZE, 1, 1));
 					}
 				}
 			}
@@ -61,7 +61,7 @@ public abstract class Level {
 				for (int j = 0; j < blocked[i].length; j++) {
 					if (map.getTileId(i, j, enemy2x4Layer) != 0) {
 						enemies.add(new BigTestEnemy(1, i * Artist.TILE_SIZE,
-								j * Artist.TILE_SIZE, 2, 4)); // Div by 4 wtf?
+								j * Artist.TILE_SIZE, 2, 4));
 					}
 				}
 			}
@@ -136,6 +136,19 @@ public abstract class Level {
 				collision = true;
 		}
 		return collision;
+	}
+	
+	public static boolean playerHasEntityCollision(){
+		for(Enemy enemy : enemies){
+			if(enemy.isCloseToPlayer()){
+				if(Player.hitbox.intersects(enemy.getHitbox())){
+					
+					return true;
+				}
+			}
+		}
+		
+		return false;
 	}
 
 	public static void updateEntities() {
