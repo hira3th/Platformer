@@ -16,8 +16,6 @@ public class BigTestEnemy extends Enemy{
 		this.spriteHeight = 128;
 		this.spriteWidth = 64;
 		this.health = 100;
-		this.xr = 0.5f;
-		this.yr = 0.5f;
 //		this.speed = 0.01f;
 	}
 
