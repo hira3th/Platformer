@@ -38,7 +38,7 @@ public abstract class Player {
 
 	public static void update() {
 
-		Level.playerHasEntityCollision();
+		Level.checkIfPlayerHasEntityCollision();
 		
 		if (Keyboard.isKeyDown(Keyboard.KEY_LEFT) || Keyboard.isKeyDown(Keyboard.KEY_A)) {
 			dx -= speed;
@@ -133,6 +133,8 @@ public abstract class Player {
 	public static void handleEntityCollision(Entity entity) {
 		double angle = Math.atan2(entity.getHitboxCenterY() - hitboxCenterY, entity.getHitboxCenterX() - hitboxCenterX);
 		float force = 1.5f;
+		dx = 0;
+		dy = 0;
 		dx -= Math.cos(angle) * force * 0.7f;
 		dy -= Math.sin(angle) * force * 0.3f;
 	}

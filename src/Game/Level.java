@@ -137,7 +137,7 @@ public abstract class Level {
 		return collision;
 	}
 	
-	public static boolean playerHasEntityCollision(){
+	public static boolean checkIfPlayerHasEntityCollision(){
 		for(Enemy enemy : enemies){
 			if(enemy.isCloseToPlayer()){
 				if(Player.hitbox.intersects(enemy.getHitbox())){
