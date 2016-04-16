@@ -180,6 +180,14 @@ public abstract class Entity {
 	public Rectangle getHitbox() {
 		return this.hitbox;
 	}
+	
+	public float getHitboxCenterX(){
+		return this.hitboxCenterX;
+	}
+	
+	public float getHitboxCenterY(){
+		return this.hitboxCenterY;
+	}
 
 	public boolean isAlive() {
 		return this.alive;

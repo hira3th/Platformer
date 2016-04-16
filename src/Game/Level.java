@@ -141,7 +141,7 @@ public abstract class Level {
 		for(Enemy enemy : enemies){
 			if(enemy.isCloseToPlayer()){
 				if(Player.hitbox.intersects(enemy.getHitbox())){
-					
+					Player.handleEntityCollision(enemy);
 					return true;
 				}
 			}

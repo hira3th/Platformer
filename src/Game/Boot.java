@@ -26,7 +26,6 @@ public class Boot {
 			Level.updateProjectiles();
 			Level.draw();
 		}
-
 		Display.destroy();
 	}
 
